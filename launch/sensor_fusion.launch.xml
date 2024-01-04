@@ -1,0 +1,19 @@
+<launch>
+  <arg name="output_topic" default="rois"/>
+  <arg name="input/radar_front" default="/sensing/radar/front/radar_data"/>
+  <arg name="input/radar_left_rear" default="/sensing/radar/left_rear/radar_data"/>
+  <arg name="input/radar_right_rear" default="/sensing/radar/right_rear/radar_data"/>
+  <arg name="input/odometry" default="/odo"/>
+  <arg name="doppler_velocity_sd" default="4.0"/>
+  <arg name="mode" default="0"/>
+
+  <node pkg="sensor_fusion" exec="sensor_fusion_node" name="$(anon sensor_fusion)" output="screen">
+    <remap from="out/objects" to="$(var output_topic)"/>
+    <remap from="~/input/radar_front" to="$(var input/radar_front)"/>
+    <remap from="~/input/radar_left_rear" to="$(var input/radar_left_rear)"/>
+    <remap from="~/input/radar_right_rear" to="$(var input/radar_right_rear)"/>
+    <remap from="~/input/odometry" to="$(var input/odometry)"/>
+    <param name="doppler_velocity_sd" value="$(var doppler_velocity_sd)"/>
+    <param name="mode" value="$(var mode)"/>
+  </node>
+</launch>
